@@ -1,0 +1,13 @@
+.next
+node_modules
+out
+build
+public
+package-lock.json
+next-env.d.ts
+AGENTS.md
+CLAUDE.md
+.claude
+.agents
+.taste-skill
+docs/*.md
