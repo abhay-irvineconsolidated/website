@@ -6,19 +6,16 @@ import {
   aiLifecycle,
   aiOverview,
   aiServices,
+  operatingModel,
   practiceFit,
-  strategyThread,
 } from "@/content/ai-solutions";
-import { PageHero } from "@/components/page/page-hero";
+import { HeroButton, PageHero } from "@/components/page/page-hero";
 import { Section } from "@/components/page/section";
 import { Label } from "@/components/page/label";
 import { Steps } from "@/components/page/steps";
-import { ButtonLink } from "@/components/ui/button";
 import { JsonLd } from "@/components/ui/json-ld";
 import { Reveal } from "@/components/ui/motion";
 import { CtaSection } from "@/components/sections/cta-section";
-import { AiOperatingModel } from "@/components/visualizations/ai-operating-model";
-import { InvoiceFlow } from "@/features/ai/invoice-flow";
 import { absoluteUrl } from "@/constants/site";
 import { organizationId, pageMeta } from "@/lib/seo";
 
@@ -55,28 +52,51 @@ export default function AiSolutionsPage() {
         intro={aiOverview.intro}
         crumbs={[{ name: "AI Solutions", path }]}
       >
-        <ButtonLink href="/contact/" variant="accent" size="lg" arrow>
-          Let’s Talk
-        </ButtonLink>
-        <ButtonLink href="#capabilities" variant="outline-dark" size="lg">
-          Explore Our Capabilities
-        </ButtonLink>
+        <HeroButton href="/contact/">Start Your AI Project</HeroButton>
       </PageHero>
 
       {/* 02 · The bigger picture */}
-      <Section ground="plain" className="pt-12 lg:pt-16">
-        <Reveal className="max-w-3xl">
-          <Label>Intelligence into action</Label>
-          <h2 className="mt-5 text-h2">From business information to intelligent action.</h2>
-          <p className="mt-6 max-w-2xl text-lead text-slate-600">
-            AI becomes valuable when it can understand your business, work with your systems and
-            move processes forward. We bring intelligence, automation and enterprise integration
-            together to make that possible.
-          </p>
-        </Reveal>
-        <Reveal delay={0.1} className="mt-14">
-          <AiOperatingModel />
-        </Reveal>
+      <Section ground="plain">
+        <div className="grid gap-14 lg:grid-cols-12 lg:gap-8">
+          <Reveal className="lg:col-span-5">
+            <div className="lg:sticky lg:top-32">
+              <Label>Intelligence into action</Label>
+              <h2 className="mt-6 text-h1">From business information to intelligent action.</h2>
+              <p className="mt-8 max-w-md text-lead text-slate-600">
+                AI becomes valuable when it can understand your business, work with your systems and
+                move processes forward. We bring intelligence, automation and enterprise integration
+                together to make that possible.
+              </p>
+            </div>
+          </Reveal>
+          <div className="lg:col-span-6 lg:col-start-7">
+            <ol>
+              {operatingModel.layers.map((layer, i) => (
+                <Reveal
+                  as="li"
+                  key={layer.title}
+                  className="grid gap-x-8 gap-y-2 border-t border-ink/15 py-7 first:pt-7 sm:grid-cols-[4rem_1fr]"
+                >
+                  <span className="pt-2 kicker text-electric-600">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <div>
+                    <h3 className="text-h3 text-ink">{layer.title}</h3>
+                    <p className="mt-3 max-w-md text-slate-600">{layer.items}</p>
+                  </div>
+                </Reveal>
+              ))}
+            </ol>
+            <div className="border-t border-ink/15 pt-7">
+              <p className="kicker text-turquoise-700">{operatingModel.controlsLabel}</p>
+              <ul className="mt-4 flex flex-wrap gap-x-8 gap-y-2 text-lg font-medium text-ink">
+                {operatingModel.controls.map((c) => (
+                  <li key={c}>{c}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
       </Section>
 
       {/* 03 · Capabilities */}
@@ -106,33 +126,10 @@ export default function AiSolutionsPage() {
                     </li>
                   ))}
                 </ul>
-                <div className="mt-6 flex flex-col items-start gap-1">
-                  {c.links.map((l) => (
-                    <ButtonLink key={l.href} href={l.href} variant="link-light" arrow>
-                      {l.label}
-                    </ButtonLink>
-                  ))}
-                </div>
               </div>
             </li>
           ))}
         </ol>
-      </Section>
-
-      {/* 04 · AI in practice */}
-      <Section ground="grain">
-        <Reveal className="max-w-3xl">
-          <Label>From process to intelligence</Label>
-          <h2 className="mt-5 text-h2">
-            One business process. An entire AI system working together.
-          </h2>
-          <p className="mt-6 max-w-2xl text-lead text-slate-600">
-            Take intelligent invoice processing. Step through it to see which capability does what.
-          </p>
-        </Reveal>
-        <Reveal delay={0.1} className="mt-14">
-          <InvoiceFlow />
-        </Reveal>
       </Section>
 
       {/* 05 · How we build */}
@@ -160,24 +157,6 @@ export default function AiSolutionsPage() {
           <h2 className="mt-5 text-h2">From identifying the opportunity to putting AI to work.</h2>
         </Reveal>
         <Steps steps={aiLifecycle} />
-        <Reveal className="mt-16 grid gap-6 border-t border-turquoise-700/40 pt-8 lg:grid-cols-12 lg:gap-10">
-          <div className="lg:col-span-6">
-            <p className="font-mono text-xs tracking-[0.18em] text-turquoise-700 uppercase">
-              AI strategy, throughout
-            </p>
-            <p className="mt-3 text-lg text-ink">{strategyThread.text}</p>
-          </div>
-          <div className="lg:col-span-5 lg:col-start-8">
-            <ul className="flex flex-wrap gap-x-5 gap-y-1.5 text-sm text-slate-600">
-              {strategyThread.items.map((s) => (
-                <li key={s}>{s}</li>
-              ))}
-            </ul>
-            <ButtonLink href={strategyThread.href} variant="link-light" arrow className="mt-3">
-              AI Strategy & Consulting
-            </ButtonLink>
-          </div>
-        </Reveal>
       </Section>
 
       {/* One technology organization */}

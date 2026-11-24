@@ -9,7 +9,7 @@ const CY = 290;
 const R = 150;
 
 const defs: { lines: string[]; note?: string; hot?: boolean }[] = [
-  { lines: ["Enterprise platforms"], note: "Workday among them", hot: true },
+  { lines: ["Enterprise platforms"], hot: true },
   { lines: ["Finance", "& HR"] },
   { lines: ["Data", "& analytics"] },
   { lines: ["Integrations", "& APIs"] },

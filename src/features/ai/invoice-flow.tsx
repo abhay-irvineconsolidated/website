@@ -76,7 +76,7 @@ export function InvoiceFlow() {
         <div
           id="invoice-ledger"
           aria-live="polite"
-          className="rounded-[2rem] bg-white p-6 shadow-[0_30px_70px_-40px_rgb(8_13_32/0.35)] ring-1 ring-ink/[0.06] sm:p-9"
+          className="rounded-md bg-white p-6 ring-1 ring-ink/10 sm:p-9"
         >
           <div className="flex flex-wrap items-baseline justify-between gap-3 border-b border-ink/10 pb-5">
             <div>

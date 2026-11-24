@@ -200,3 +200,14 @@
     var(--color-midnight-950) 100%
   );
 }
+
+/* ---------- Brand palette as specified for the homepage redesign ---------- */
+@theme {
+  --color-brand-midnight: #071020;
+  --color-brand-navy: #101d38;
+  --color-brand-electric: #174bc5;
+  --color-brand-azure: #087fca;
+  --color-brand-turquoise: #00bdb5;
+  --color-brand-cyan: #39d5d0;
+  --color-brand-ice: #f4f6fa;
+}

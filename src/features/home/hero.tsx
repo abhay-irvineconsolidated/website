@@ -1,41 +1,44 @@
+import { ArrowDown } from "lucide-react";
 import { ButtonLink } from "@/components/ui/button";
-import { LogoMarquee } from "@/components/sections/logo-marquee";
 
-/**
- * Centred hero on the horizon ground: title, one line, two actions.
- * A light sheet carrying the platform marquee rounds up over its foot.
- */
+/** Dark atmospheric hero: the headline and the light do the work. */
 export function Hero() {
   return (
-    <section aria-labelledby="hero-title" className="relative">
-      <div className="surface-horizon flex min-h-[calc(100svh-4.5rem)] flex-col items-center justify-center px-5 pt-32 pb-60 text-center text-white">
-        <div className="relative w-full">
-          <h1
-            id="hero-title"
-            className="mx-auto max-w-5xl text-display text-white motion-safe:animate-rise"
+    <section aria-labelledby="hero-title" className="atmos-dark flex min-h-svh flex-col">
+      {/* steel-blue light rising from the foot of the screen */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-3/5 bg-[radial-gradient(90%_100%_at_50%_100%,rgb(8_127_202/0.5),rgb(23_75_197/0.18)_55%,transparent_80%)]"
+      />
+      <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col items-center justify-center px-5 pt-32 pb-28 text-center">
+        <h1
+          id="hero-title"
+          className="max-w-3xl text-[clamp(2.25rem,1.4rem+3.4vw,4.25rem)] leading-[1.08] font-normal tracking-[-0.03em] text-white motion-safe:animate-rise"
+        >
+          Turn business complexity into{" "}
+          <span className="text-cyan-200">intelligent operations.</span>
+        </h1>
+        <p className="mt-6 max-w-xl text-base text-silver-300 motion-safe:animate-rise motion-safe:[animation-delay:120ms]">
+          AI solutions, custom software and enterprise platforms.
+        </p>
+        <div className="mt-8 motion-safe:animate-rise motion-safe:[animation-delay:220ms]">
+          <ButtonLink
+            href="/contact/"
+            variant="outline-dark"
+            arrow
+            className="border-white/15 bg-white/10 shadow-[inset_0_1px_0_rgb(255_255_255/0.12)] backdrop-blur-sm hover:bg-white/15"
           >
-            Engineering <span className="text-gradient-accent">intelligence</span> into every
-            workflow.
-          </h1>
-          <p className="mx-auto mt-8 max-w-2xl text-lead text-silver-200 motion-safe:animate-rise motion-safe:[animation-delay:120ms]">
-            Enterprise AI, custom software and connected systems that change how your business runs.
-          </p>
-          <div className="mt-10 flex flex-col items-center justify-center gap-3 motion-safe:animate-rise motion-safe:[animation-delay:220ms] sm:flex-row">
-            <ButtonLink href="/ai-solutions/" variant="accent" size="lg" arrow>
-              Explore Our Solutions
-            </ButtonLink>
-            <ButtonLink href="/contact/" variant="outline-dark" size="lg">
-              Let’s Talk
-            </ButtonLink>
-          </div>
+            Start Your AI Journey
+          </ButtonLink>
         </div>
       </div>
-
-      <div className="relative z-10 -mt-12 rounded-t-[2.5rem] bg-ice-50">
-        <div className="py-10">
-          <LogoMarquee />
-        </div>
-      </div>
+      <a
+        href="#intro"
+        className="absolute bottom-8 left-1/2 flex -translate-x-1/2 items-center gap-2 text-sm text-silver-200 transition-colors hover:text-white"
+      >
+        Scroll down
+        <ArrowDown aria-hidden="true" className="size-4 motion-safe:animate-pulse-soft" />
+      </a>
     </section>
   );
 }

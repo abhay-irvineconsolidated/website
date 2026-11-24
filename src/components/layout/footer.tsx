@@ -8,7 +8,7 @@ import { CopyrightYear } from "@/components/layout/copyright-year";
 
 export function Footer() {
   return (
-    <footer className="relative overflow-hidden text-silver-300 surface-graphite">
+    <footer className="relative overflow-hidden border-t border-white/10 text-silver-300 surface-graphite">
       <div aria-hidden="true" className="absolute inset-x-0 top-0 seam" />
       <div className="container-wide pt-20 pb-10 lg:pt-24">
         <div className="grid gap-14 lg:grid-cols-[1.1fr_2fr] lg:gap-16">
@@ -60,26 +60,19 @@ export function Footer() {
             </div>
           </div>
 
-          <nav aria-label="Footer" className="grid grid-cols-2 gap-x-8 gap-y-12 md:grid-cols-4">
-            {footerNav.map((col) => (
-              <div key={col.title}>
-                <h2 className="font-mono text-caption font-medium text-white uppercase">
-                  {col.title}
-                </h2>
-                <ul className="mt-5 space-y-0.5">
-                  {col.links.map((l) => (
-                    <li key={l.href + l.label}>
-                      <Link
-                        href={l.href}
-                        className="inline-block py-1.5 text-[0.875rem] leading-snug transition-colors duration-150 hover:text-white"
-                      >
-                        {l.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+          <nav aria-label="Footer" className="lg:justify-self-end">
+            <ul className="grid gap-x-16 gap-y-1 sm:grid-cols-2">
+              {footerNav.map((l) => (
+                <li key={l.href + l.label}>
+                  <Link
+                    href={l.href}
+                    className="inline-block py-2 text-lg text-white/80 transition-colors duration-150 hover:text-white"
+                  >
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </nav>
         </div>
 
@@ -92,16 +85,6 @@ export function Footer() {
               <li>
                 <Link href="/privacy-policy/" className="hover:text-white">
                   Privacy Policy
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact/" className="hover:text-white">
-                  Contact
-                </Link>
-              </li>
-              <li>
-                <Link href="/careers/" className="hover:text-white">
-                  Careers
                 </Link>
               </li>
             </ul>

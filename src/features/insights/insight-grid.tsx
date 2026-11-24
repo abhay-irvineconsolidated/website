@@ -54,12 +54,12 @@ export function InsightGrid({
         {shown.length} articles shown
       </p>
 
-      <ul className="mt-10 grid gap-5">
+      <ul className="mt-10 border-b border-ink/15">
         {shown.map((item) => (
           <li key={item.slug} className="flex">
             <Link
               href={`/insights/${item.slug}/`}
-              className="group grid w-full gap-x-10 gap-y-3 rounded-2xl border border-ink/[0.07] bg-white p-6 shadow-[0_18px_40px_-28px_rgb(11_17_36/0.3)] transition-[transform,box-shadow] duration-200 sm:grid-cols-[9rem_1fr] sm:p-8 pointer-fine:hover:-translate-y-0.5 pointer-fine:hover:shadow-[0_24px_48px_-28px_rgb(11_17_36/0.4)]"
+              className="group grid w-full gap-x-10 gap-y-3 border-t border-ink/15 py-8 sm:grid-cols-[9rem_1fr] sm:py-10"
             >
               <p className="flex flex-col gap-1 text-sm">
                 <span className="font-medium text-electric-600">{item.categoryLabel}</span>

@@ -3,10 +3,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import { getWorkdayService, workdayServices } from "@/content/enterprise";
-import { PageHero } from "@/components/page/page-hero";
+import { HeroButton, PageHero } from "@/components/page/page-hero";
 import { Section } from "@/components/page/section";
 import { ProductExtras } from "@/components/page/product-extras";
-import { ButtonLink } from "@/components/ui/button";
 import { JsonLd } from "@/components/ui/json-ld";
 import { Reveal } from "@/components/ui/motion";
 import { CtaSection } from "@/components/sections/cta-section";
@@ -64,9 +63,7 @@ export default async function EnterpriseServicePage({
           { name: service.pageTitle, path: service.href },
         ]}
       >
-        <ButtonLink href="/contact/#schedule" variant="accent" size="lg" arrow>
-          Book a Consultation
-        </ButtonLink>
+        <HeroButton href="/contact/">Book a Consultation</HeroButton>
       </PageHero>
 
       <Section ground="mist">
@@ -129,7 +126,7 @@ export default async function EnterpriseServicePage({
         eyebrow="Talk to Chris Irvine"
         title="Let’s make your enterprise technology work harder."
         text="Book time with our Founder & CEO to discuss what your organization needs next."
-        primary={{ label: "Book a Consultation", href: "/contact/#schedule" }}
+        primary={{ label: "Book a Consultation", href: "/contact/" }}
       />
     </>
   );

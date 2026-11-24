@@ -3,11 +3,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 import { aiPages, aiServices, getAiPage } from "@/content/ai-solutions";
-import { PageHero } from "@/components/page/page-hero";
+import { HeroButton, PageHero } from "@/components/page/page-hero";
 import { Section } from "@/components/page/section";
 import { ServiceBlock } from "@/components/page/service-block";
 import { faqSchema } from "@/components/page/faq-list";
-import { ButtonLink } from "@/components/ui/button";
 import { JsonLd } from "@/components/ui/json-ld";
 import { CtaSection } from "@/components/sections/cta-section";
 import { absoluteUrl } from "@/constants/site";
@@ -59,12 +58,7 @@ export default async function AiDetailPage({ params }: PageProps<"/ai-solutions/
           { name: page.title, path: page.href },
         ]}
       >
-        <ButtonLink href="/contact/" variant="accent" size="lg" arrow>
-          Let’s Talk
-        </ButtonLink>
-        <ButtonLink href="/ai-solutions/" variant="outline-dark" size="lg">
-          AI Solutions overview
-        </ButtonLink>
+        <HeroButton href="/contact/">Discuss This Solution</HeroButton>
       </PageHero>
 
       {services.map((s, i) => (

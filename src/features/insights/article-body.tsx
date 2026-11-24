@@ -85,7 +85,7 @@ export function ArticleBody({ blocks }: { blocks: Block[] }) {
             );
           case "quote":
             return (
-              <figure key={i} className="my-10 rounded-2xl bg-ice-50 p-7 sm:p-8">
+              <figure key={i} className="my-10 rounded-sm bg-brand-ice p-7 sm:p-8">
                 <Quote aria-hidden="true" className="size-6 text-electric-500" />
                 <blockquote className="mt-4 text-xl leading-relaxed font-medium text-ink">
                   {block.text}
@@ -99,7 +99,7 @@ export function ArticleBody({ blocks }: { blocks: Block[] }) {
                 key={i}
                 href={block.href}
                 download
-                className="group mt-8 flex items-center gap-4 rounded-2xl border border-ink/10 bg-ice-50 p-5 transition-colors hover:border-electric-600"
+                className="group mt-8 flex items-center gap-4 rounded-sm border border-ink/10 bg-brand-ice p-5 transition-colors hover:border-electric-600"
               >
                 <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-white text-electric-600">
                   <Download aria-hidden="true" className="size-5" />

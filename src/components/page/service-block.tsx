@@ -32,10 +32,8 @@ export function ServiceBlock({ service, ground, children }: Props) {
       <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
         <Reveal className="lg:col-span-5">
           <div className="lg:sticky lg:top-32">
-            <span className="flex size-12 items-center justify-center rounded-xl bg-electric-50 text-electric-600">
-              <Icon aria-hidden="true" className="size-6" />
-            </span>
-            <p className="mt-6 text-sm font-medium text-electric-600">{service.name}</p>
+            <Icon aria-hidden="true" className="size-7 text-electric-600" strokeWidth={1.5} />
+            <p className="mt-6 kicker text-electric-600">{service.name}</p>
             <h2 className="mt-3 text-h2">{service.headline}</h2>
             <p className="mt-5 text-lead text-slate-600">{service.intro}</p>
           </div>
@@ -54,7 +52,7 @@ export function ServiceBlock({ service, ground, children }: Props) {
 
           <div>
             <SubHead>{capability ? "What we build" : "What we deliver"}</SubHead>
-            <ul className={`${cardSurface} mt-4 divide-y divide-ink/[0.07] px-6 sm:px-8`}>
+            <ul className={`${cardSurface} mt-4 divide-y divide-ink/10`}>
               {items.map((c) => (
                 <li key={c.title} className="flex gap-4 py-5">
                   <Check aria-hidden="true" className="mt-1 size-4 shrink-0 text-turquoise-700" />
@@ -83,7 +81,7 @@ export function ServiceBlock({ service, ground, children }: Props) {
                 </ul>
                 <ul className="mt-8 grid gap-4 sm:grid-cols-3">
                   {capability.outcomes.map((o) => (
-                    <li key={o.title} className="rounded-xl bg-white/70 p-5 ring-1 ring-ink/[0.07]">
+                    <li key={o.title} className="border-t border-ink/15 pt-5">
                       <p className="font-mono text-xs text-electric-600">Outcome</p>
                       <p className="mt-2 font-semibold text-ink">{o.title}</p>
                       <p className="mt-1 text-sm leading-relaxed text-slate-600">{o.text}</p>

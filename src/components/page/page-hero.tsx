@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { ButtonLink } from "@/components/ui/button";
 import { JsonLd } from "@/components/ui/json-ld";
 import { breadcrumbSchema } from "@/lib/seo";
 import { cn } from "@/lib/utils";
@@ -6,9 +7,9 @@ import { cn } from "@/lib/utils";
 export type Crumb = { name: string; path: string };
 
 /**
- * Inner-page hero on the horizon ground: the h1, one line and optional actions, centred like
- * the homepage. A light sheet rounds up over its foot. No visible breadcrumbs (client request);
- * the trail is still emitted as BreadcrumbList JSON-LD for search engines.
+ * Inner-page hero on the dark atmospheric ground, centred like the homepage: the h1, one line
+ * and optional actions. No visible breadcrumbs (client request); the trail is still emitted as
+ * BreadcrumbList JSON-LD for search engines.
  */
 export function PageHero({
   title,
@@ -16,7 +17,6 @@ export function PageHero({
   crumbs,
   children,
   className,
-  sheet = true,
 }: {
   title: ReactNode;
   intro?: ReactNode;
@@ -24,18 +24,11 @@ export function PageHero({
   crumbs: Crumb[];
   children?: ReactNode;
   className?: string;
-  /** The light sheet that rounds up over the hero's foot: ice by default, "white" to meet a white section, false when a dark section follows. */
-  sheet?: boolean | "white";
 }) {
   return (
-    <section aria-labelledby="page-title" className="relative">
+    <section aria-labelledby="page-title">
       <JsonLd data={{ "@context": "https://schema.org", ...breadcrumbSchema(crumbs) }} />
-      <div
-        className={cn(
-          "surface-horizon px-5 pt-44 pb-56 text-center text-white [--horizon-lift:130px] sm:pt-48 lg:pb-64",
-          className,
-        )}
-      >
+      <div className={cn("atmos-dark px-5 pt-44 pb-24 text-center sm:pt-48 lg:pb-32", className)}>
         <div className="mx-auto max-w-4xl">
           <h1
             id="page-title"
@@ -55,15 +48,20 @@ export function PageHero({
           ) : null}
         </div>
       </div>
-      {sheet ? (
-        <div
-          aria-hidden="true"
-          className={cn(
-            "relative z-10 -mt-12 h-12 rounded-t-[2.5rem]",
-            sheet === "white" ? "bg-white" : "bg-ice-50",
-          )}
-        />
-      ) : null}
     </section>
+  );
+}
+
+/** The single frosted hero action, as on the homepage. Give each section its own label. */
+export function HeroButton({ href, children }: { href: string; children: string }) {
+  return (
+    <ButtonLink
+      href={href}
+      variant="outline-dark"
+      arrow
+      className="border-white/15 bg-white/10 shadow-[inset_0_1px_0_rgb(255_255_255/0.12)] backdrop-blur-sm hover:bg-white/15"
+    >
+      {children}
+    </ButtonLink>
   );
 }

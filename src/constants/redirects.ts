@@ -97,7 +97,7 @@ export const legacyRedirects: LegacyRedirect[] = [
   { source: "/lets-get-started/", destination: "/contact/", note: "Let's Get Started" },
   {
     source: "/schedule-a-consultation/",
-    destination: "/contact/#schedule",
+    destination: "/contact/",
     note: "Schedule a consultation",
   },
   { source: "/forms/", destination: "/contact/", note: "Empty forms page" },

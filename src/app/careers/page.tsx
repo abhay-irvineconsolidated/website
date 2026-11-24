@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import { careers } from "@/content/company";
-import { PageHero } from "@/components/page/page-hero";
+import { HeroButton, PageHero } from "@/components/page/page-hero";
 import { Section, SectionTitle } from "@/components/page/section";
 import { Cards } from "@/components/page/cards";
-import { ButtonLink } from "@/components/ui/button";
 import { CtaSection } from "@/components/sections/cta-section";
 import { pageMeta } from "@/lib/seo";
 
@@ -25,9 +24,7 @@ export default function CareersPage() {
         intro="AI engineers, software developers, data specialists and Workday consultants, all 100% remote."
         crumbs={[{ name: "Careers", path }]}
       >
-        <ButtonLink href={applyHref} variant="accent" size="lg" arrow>
-          Join Our Talent Network
-        </ButtonLink>
+        <HeroButton href={applyHref}>Join Our Talent Network</HeroButton>
       </PageHero>
 
       <Section ground="mist">

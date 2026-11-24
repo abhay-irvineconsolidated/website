@@ -6,10 +6,9 @@ import {
   softwareServices,
   solutionLayers,
 } from "@/content/software";
-import { PageHero } from "@/components/page/page-hero";
+import { HeroButton, PageHero } from "@/components/page/page-hero";
 import { Section } from "@/components/page/section";
 import { Steps } from "@/components/page/steps";
-import { ButtonLink } from "@/components/ui/button";
 import { JsonLd } from "@/components/ui/json-ld";
 import { Reveal } from "@/components/ui/motion";
 import { CtaSection } from "@/components/sections/cta-section";
@@ -54,14 +53,8 @@ export default function SoftwarePage() {
         title={softwareOverview.headline}
         intro={softwareOverview.intro}
         crumbs={[{ name: "Software & Workflows", path }]}
-        sheet="white"
       >
-        <ButtonLink href="/contact/" variant="accent" size="lg" arrow>
-          Let’s Talk
-        </ButtonLink>
-        <ButtonLink href="#capabilities" variant="outline-dark" size="lg">
-          Explore Our Capabilities
-        </ButtonLink>
+        <HeroButton href="/contact/">Plan Your Build</HeroButton>
       </PageHero>
 
       {/* 2 · The bigger picture: one solution, five layers */}

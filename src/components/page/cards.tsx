@@ -20,10 +20,10 @@ const columns = {
   5: "grid-cols-2 lg:grid-cols-5",
 } as const;
 
-export const cardSurface =
-  "rounded-2xl border border-ink/[0.07] bg-white shadow-[0_18px_40px_-28px_rgb(11_17_36/0.3)]";
+/** An editorial cell: a hairline above, no box. Used by Cards and anywhere a flat item is needed. */
+export const cardSurface = "border-t border-ink/15";
 
-/** White cards with a title and one line. Linked cards lift on hover and carry an arrow. */
+/** Items set between hairlines: a title and one line. Linked items carry an arrow and the title answers hover. */
 export function Cards({
   items,
   cols = 3,
@@ -34,20 +34,22 @@ export function Cards({
   className?: string;
 }) {
   return (
-    <Stagger className={cn("mt-12 grid gap-4 lg:gap-5", columns[cols], className)}>
+    <Stagger className={cn("mt-14 grid gap-x-10 gap-y-12 lg:gap-x-14", columns[cols], className)}>
       {items.map((item) => {
         const Icon = item.icon;
         const body = (
           <>
             {Icon ? (
-              <span className="mb-5 flex size-10 items-center justify-center rounded-xl bg-electric-50 text-electric-600">
-                <Icon aria-hidden="true" className="size-5" />
-              </span>
+              <Icon
+                aria-hidden="true"
+                className="mb-5 size-6 text-electric-600"
+                strokeWidth={1.5}
+              />
             ) : null}
             {item.kicker ? (
-              <span className="mb-3 block font-mono text-sm text-electric-600">{item.kicker}</span>
+              <span className="mb-3 block kicker text-electric-600">{item.kicker}</span>
             ) : null}
-            <h3 className="flex items-start justify-between gap-3 text-lg leading-snug font-semibold text-ink">
+            <h3 className="flex items-start justify-between gap-3 text-h4 text-ink transition-colors group-hover:text-electric-600">
               {item.title}
               {item.href ? (
                 <ArrowRight
@@ -56,23 +58,17 @@ export function Cards({
                 />
               ) : null}
             </h3>
-            <p className="mt-2 leading-relaxed text-slate-600">{item.text}</p>
+            <p className="mt-3 leading-relaxed text-slate-600">{item.text}</p>
           </>
         );
         return (
           <StaggerItem key={item.title} className="flex">
             {item.href ? (
-              <Link
-                href={item.href}
-                className={cn(
-                  cardSurface,
-                  "group flex w-full flex-col p-6 transition-[transform,box-shadow] duration-200 sm:p-7 pointer-fine:hover:-translate-y-0.5 pointer-fine:hover:shadow-[0_24px_48px_-28px_rgb(11_17_36/0.4)]",
-                )}
-              >
+              <Link href={item.href} className={cn(cardSurface, "group flex w-full flex-col pt-6")}>
                 {body}
               </Link>
             ) : (
-              <div className={cn(cardSurface, "flex w-full flex-col p-6 sm:p-7")}>{body}</div>
+              <div className={cn(cardSurface, "group flex w-full flex-col pt-6")}>{body}</div>
             )}
           </StaggerItem>
         );

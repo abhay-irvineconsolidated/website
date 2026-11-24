@@ -3,17 +3,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import {
-  credentials,
   enterpriseCapabilities,
   enterpriseOverview,
-  partnerSteps,
   productHighlights,
   productLinks,
   workdayServices,
 } from "@/content/enterprise";
-import { PageHero } from "@/components/page/page-hero";
+import { HeroButton, PageHero } from "@/components/page/page-hero";
 import { Section } from "@/components/page/section";
-import { Steps } from "@/components/page/steps";
 import { ButtonLink } from "@/components/ui/button";
 import { JsonLd } from "@/components/ui/json-ld";
 import { Reveal } from "@/components/ui/motion";
@@ -22,8 +19,6 @@ import { EnterpriseEcosystem } from "@/components/visualizations/enterprise-ecos
 import { absoluteUrl } from "@/constants/site";
 import { organizationId, pageMeta } from "@/lib/seo";
 import productShot from "../../../public/images/products/bulk-one-time-payments.png";
-import servicesPartnerBadge from "../../../public/images/partners/workday-services-partner.png";
-import builtOnWorkdayBadge from "../../../public/images/partners/built-on-workday.png";
 
 const path = "/enterprise-solutions/";
 
@@ -79,14 +74,8 @@ export default function EnterprisePage() {
         title={enterpriseOverview.headline}
         intro={enterpriseOverview.intro}
         crumbs={[{ name: "Enterprise Solutions", path }]}
-        sheet="white"
       >
-        <ButtonLink href="/contact/" variant="accent" size="lg" arrow>
-          Let’s Talk
-        </ButtonLink>
-        <ButtonLink href="#capabilities" variant="outline-dark" size="lg">
-          Explore Our Capabilities
-        </ButtonLink>
+        <HeroButton href="/contact/">Start Your Workday Project</HeroButton>
       </PageHero>
 
       {/* 2 · The bigger picture */}
@@ -181,8 +170,8 @@ export default function EnterprisePage() {
       </Section>
 
       {/* 5 · Reward My Team */}
-      <section className="bg-ice-50 px-3 pb-6 sm:px-5 lg:pb-10">
-        <Reveal className="container-wide overflow-hidden rounded-[2.5rem] bg-midnight-900 px-6 py-16 text-white sm:px-12 lg:px-16 lg:py-24">
+      <section className="atmos-navy py-20 lg:py-28">
+        <Reveal className="container-wide">
           <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-10">
             <div className="lg:col-span-7">
               <Label dark>Built on Workday</Label>
@@ -211,7 +200,7 @@ export default function EnterprisePage() {
               </div>
             </div>
             <div className="flex flex-col items-center gap-5 lg:col-span-4 lg:col-start-9">
-              <div className="rounded-[2.5rem] bg-white p-5 shadow-[0_40px_80px_-30px_rgb(0_182_176/0.35)]">
+              <div className="rounded-3xl bg-white p-4">
                 <Image
                   src={productShot}
                   alt="Reward My Team app icon"
@@ -227,89 +216,13 @@ export default function EnterprisePage() {
         </Reveal>
       </section>
 
-      {/* 6 · Track record */}
-      <Section ground="mist-alt">
-        <div className="grid items-end gap-8 lg:grid-cols-12">
-          <Reveal className="lg:col-span-7">
-            <Label>Experience and credentials</Label>
-            <h2 className="mt-5 max-w-xl text-h2">
-              Built on experience. Recognized through delivery.
-            </h2>
-          </Reveal>
-          <Reveal
-            delay={0.1}
-            className="flex items-center gap-5 lg:col-span-4 lg:col-start-9 lg:justify-end"
-          >
-            <Image
-              src={servicesPartnerBadge}
-              alt="Workday Services Partner badge"
-              className="h-24 w-auto"
-              sizes="96px"
-            />
-            <Image
-              src={builtOnWorkdayBadge}
-              alt="Built on Workday badge"
-              className="h-24 w-auto"
-              sizes="96px"
-            />
-          </Reveal>
-        </div>
-
-        <Reveal className="mt-16">
-          <ol className="relative grid gap-10 lg:grid-cols-5 lg:gap-6">
-            <span
-              aria-hidden="true"
-              className="absolute top-2 bottom-2 left-[0.4375rem] w-px bg-electric-500/30 lg:top-[0.4375rem] lg:right-0 lg:bottom-auto lg:left-0 lg:h-px lg:w-auto"
-            />
-            {credentials.map((c) => (
-              <li key={c.label}>
-                {c.href ? (
-                  <Link href={c.href} className="group block lg:pr-4">
-                    <Milestone date={c.date} label={c.label} linked />
-                  </Link>
-                ) : (
-                  <div className="lg:pr-4">
-                    <Milestone date={c.date} label={c.label} />
-                  </div>
-                )}
-              </li>
-            ))}
-          </ol>
-        </Reveal>
-      </Section>
-
-      {/* 7 · How we partner */}
-      <Section ground="halo" className="py-16 lg:py-24">
-        <Reveal className="mx-auto max-w-3xl text-center">
-          <Label>Our approach</Label>
-          <h2 className="mt-5 text-h2">An enterprise partner throughout the journey.</h2>
-        </Reveal>
-        <Steps steps={partnerSteps} />
-      </Section>
-
       {/* 8 · Final CTA */}
       <CtaSection
         eyebrow="Talk to Chris Irvine"
         title="Let’s make your enterprise technology work harder."
         text="Whether you’re implementing Workday, optimizing an existing tenant, or connecting enterprise systems, let’s discuss what your organization needs next."
-        primary={{ label: "Book a Consultation", href: "/contact/#schedule" }}
+        primary={{ label: "Book a Consultation", href: "/contact/" }}
       />
     </>
-  );
-}
-
-function Milestone({ date, label, linked }: { date: string; label: string; linked?: boolean }) {
-  return (
-    <span className="flex gap-5 lg:block">
-      <span className="relative z-10 mt-0.5 block size-[0.9375rem] shrink-0 rounded-full border-2 border-electric-500 bg-ice-50" />
-      <span className="block lg:mt-5">
-        <span className="block font-mono text-sm text-electric-600">{date}</span>
-        <span
-          className={`mt-1.5 block text-lg leading-snug font-semibold text-ink ${linked ? "group-hover:text-electric-600" : ""}`}
-        >
-          {label}
-        </span>
-      </span>
-    </span>
   );
 }

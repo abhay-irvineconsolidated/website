@@ -1,8 +1,5 @@
 import type { Metadata } from "next";
-import Image from "next/image";
-import { Check, Mail, MapPin, Newspaper, Phone } from "lucide-react";
-import { consultationTopics } from "@/content/enterprise";
-import { leadership } from "@/content/company";
+import { Mail, MapPin, Newspaper, Phone } from "lucide-react";
 import { site } from "@/constants/site";
 import { PageHero } from "@/components/page/page-hero";
 import { Section } from "@/components/page/section";
@@ -13,7 +10,6 @@ import { LinkedInIcon, YouTubeIcon } from "@/components/ui/social-icons";
 import { ContactForm } from "@/features/contact/contact-form";
 import { pageMeta } from "@/lib/seo";
 import { cn } from "@/lib/utils";
-import chrisPhoto from "../../../public/images/team/chris-irvine.png";
 
 const path = "/contact/";
 
@@ -32,7 +28,6 @@ const details = [
 ];
 
 export default function ContactPage() {
-  const person = leadership.people[0];
   return (
     <>
       <PageHero
@@ -80,6 +75,9 @@ export default function ContactPage() {
                 );
               })}
             </ul>
+            <ButtonLink href={site.schedulingUrl} variant="primary" arrow className="self-start">
+              Schedule a Meeting
+            </ButtonLink>
             <div className="flex gap-3">
               <a
                 href={site.social.linkedin}
@@ -105,56 +103,6 @@ export default function ContactPage() {
           </Reveal>
         </div>
       </Section>
-
-      {person ? (
-        <Section ground="grain" id="schedule">
-          <div className="grid items-center gap-12 lg:grid-cols-12 lg:gap-8">
-            <Reveal className="lg:col-span-6">
-              <p className="text-sm font-medium text-electric-600">Schedule a consultation</p>
-              <h2 className="mt-3 max-w-xl text-h2">Your partner in achieving Workday success.</h2>
-              <p className="mt-5 max-w-lg text-lead text-slate-600">
-                Book time with {person.name}, our {person.role}, on any of these topics.
-              </p>
-              <ButtonLink
-                href={site.schedulingUrl}
-                variant="primary"
-                size="lg"
-                arrow
-                className="mt-8"
-              >
-                Schedule a Meeting
-              </ButtonLink>
-            </Reveal>
-            <Reveal delay={0.1} className="lg:col-span-5 lg:col-start-8">
-              <div className={cn(cardSurface, "p-2")}>
-                <div className="flex items-center gap-4 px-4 pt-4 pb-3">
-                  <Image
-                    src={chrisPhoto}
-                    alt=""
-                    className="size-14 rounded-full object-cover"
-                    sizes="56px"
-                  />
-                  <div>
-                    <p className="font-semibold text-ink">{person.name}</p>
-                    <p className="text-sm text-slate-600">{person.role}</p>
-                  </div>
-                </div>
-                <ul>
-                  {consultationTopics.map((t) => (
-                    <li
-                      key={t}
-                      className="flex items-center gap-3 border-t border-ink/[0.07] px-4 py-3.5 font-medium text-ink"
-                    >
-                      <Check aria-hidden="true" className="size-4 text-turquoise-700" />
-                      {t}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </Reveal>
-          </div>
-        </Section>
-      ) : null}
     </>
   );
 }
