@@ -233,7 +233,7 @@ export function ConnectedVisual({ className }: { className?: string }) {
     { label: "Integrations", x: 130, y: 300, lx: 110, ly: 307, a: "end" },
   ];
   return (
-    <svg viewBox="-80 0 760 600" fill="none" aria-hidden="true" className={className}>
+    <svg viewBox="-120 0 840 600" fill="none" aria-hidden="true" className={className}>
       <circle
         cx="300"
         cy="300"
