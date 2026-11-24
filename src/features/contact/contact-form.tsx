@@ -1,33 +1,21 @@
 "use client";
 
-import { useEffect, useId, useState, type ReactNode } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { CheckCircle2, Mail } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Field } from "@/components/ui/field";
 import { site } from "@/constants/site";
-import { cn } from "@/lib/utils";
-
-export const interests = [
-  { value: "ai", label: "AI Solutions" },
-  { value: "software", label: "Software & Workflows" },
-  { value: "workday", label: "Enterprise Solutions (Workday)" },
-  { value: "product", label: "Reward My Team demo" },
-  { value: "careers", label: "Careers / Talent Network" },
-  { value: "media", label: "Media enquiry" },
-  { value: "other", label: "Something else" },
-] as const;
-
-type Interest = (typeof interests)[number]["value"];
-const interestValues = interests.map((i) => i.value) as [Interest, ...Interest[]];
+import { hubspotForms, submitHubSpotForm } from "@/lib/hubspot";
 
 const schema = z.object({
-  name: z.string().trim().min(2, "Please enter your name."),
+  firstname: z.string().trim().min(1, "Please enter your first name."),
+  lastname: z.string().trim().min(1, "Please enter your last name."),
   email: z.email("Please enter a valid email address."),
-  company: z.string().trim().max(120).optional(),
-  interest: z.enum(interestValues, { error: "Please choose what this is about." }),
+  company: z.string().trim().min(1, "Please enter your company name.").max(120),
   message: z
     .string()
     .trim()
@@ -39,69 +27,39 @@ const schema = z.object({
 
 type FormValues = z.infer<typeof schema>;
 
-/** Optional: a form backend (HubSpot, Formspree, an API route…). Without it, the form opens an email. */
-const endpoint = process.env.NEXT_PUBLIC_CONTACT_ENDPOINT;
-
-type Status = { kind: "idle" } | { kind: "sent" } | { kind: "mailto" } | { kind: "error" };
+type Status = "idle" | "sent" | "error";
 
 export function ContactForm() {
-  const [status, setStatus] = useState<Status>({ kind: "idle" });
+  const [status, setStatus] = useState<Status>("idle");
   const {
     register,
     handleSubmit,
-    setValue,
     reset,
     formState: { errors, isSubmitting },
   } = useForm<FormValues>({
     resolver: zodResolver(schema),
-    defaultValues: { name: "", email: "", company: "", message: "", website: "" },
+    defaultValues: {
+      firstname: "",
+      lastname: "",
+      email: "",
+      company: "",
+      message: "",
+      website: "",
+    },
   });
 
-  // Pre-select the topic from links such as /contact/?interest=careers.
-  useEffect(() => {
-    const value = new URLSearchParams(window.location.search).get("interest");
-    if (value && interestValues.includes(value as Interest)) {
-      setValue("interest", value as Interest);
+  async function onSubmit({ website, ...values }: FormValues) {
+    if (website) return; // bot
+    try {
+      await submitHubSpotForm(hubspotForms.contact, values);
+      reset();
+      setStatus("sent");
+    } catch {
+      setStatus("error");
     }
-  }, [setValue]);
-
-  async function onSubmit(values: FormValues) {
-    if (values.website) return; // bot
-    const topic = interests.find((i) => i.value === values.interest)?.label ?? "Enquiry";
-
-    if (endpoint) {
-      try {
-        const res = await fetch(endpoint, {
-          method: "POST",
-          headers: { "Content-Type": "application/json", Accept: "application/json" },
-          body: JSON.stringify({ ...values, topic, website: undefined }),
-        });
-        if (!res.ok) throw new Error(String(res.status));
-        reset();
-        setStatus({ kind: "sent" });
-      } catch {
-        setStatus({ kind: "error" });
-      }
-      return;
-    }
-
-    const body = [
-      values.message,
-      "",
-      `Name: ${values.name}`,
-      `Email: ${values.email}`,
-      values.company ? `Company: ${values.company}` : "",
-    ]
-      .filter(Boolean)
-      .join("\n");
-    const to = values.interest === "media" ? site.mediaEmail : site.email;
-    window.location.assign(
-      `mailto:${to}?subject=${encodeURIComponent(`${topic}: ${values.name}`)}&body=${encodeURIComponent(body)}`,
-    );
-    setStatus({ kind: "mailto" });
   }
 
-  if (status.kind === "sent") {
+  if (status === "sent") {
     return (
       <div role="status" className="flex flex-col items-start py-6">
         <CheckCircle2 aria-hidden="true" className="size-10 text-turquoise-700" />
@@ -113,11 +71,7 @@ export function ContactForm() {
           </a>
           .
         </p>
-        <Button
-          variant="outline-light"
-          className="mt-8"
-          onClick={() => setStatus({ kind: "idle" })}
-        >
+        <Button variant="outline-light" className="mt-8" onClick={() => setStatus("idle")}>
           Send another message
         </Button>
       </div>
@@ -127,30 +81,19 @@ export function ContactForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)} noValidate className="grid gap-5">
       <div className="grid gap-5 sm:grid-cols-2">
-        <Field label="Name" error={errors.name?.message} required>
-          {(p) => <input {...p} {...register("name")} autoComplete="name" />}
+        <Field label="First name" error={errors.firstname?.message} required>
+          {(p) => <input {...p} {...register("firstname")} autoComplete="given-name" />}
         </Field>
-        <Field label="Business email" error={errors.email?.message} required>
-          {(p) => <input {...p} {...register("email")} type="email" autoComplete="email" />}
+        <Field label="Last name" error={errors.lastname?.message} required>
+          {(p) => <input {...p} {...register("lastname")} autoComplete="family-name" />}
         </Field>
       </div>
       <div className="grid gap-5 sm:grid-cols-2">
-        <Field label="Company" error={errors.company?.message}>
-          {(p) => <input {...p} {...register("company")} autoComplete="organization" />}
+        <Field label="Business email" error={errors.email?.message} required>
+          {(p) => <input {...p} {...register("email")} type="email" autoComplete="email" />}
         </Field>
-        <Field label="What is this about?" error={errors.interest?.message} required>
-          {(p) => (
-            <select {...p} {...register("interest")} defaultValue="">
-              <option value="" disabled>
-                Choose a topic
-              </option>
-              {interests.map((i) => (
-                <option key={i.value} value={i.value}>
-                  {i.label}
-                </option>
-              ))}
-            </select>
-          )}
+        <Field label="Company" error={errors.company?.message} required>
+          {(p) => <input {...p} {...register("company")} autoComplete="organization" />}
         </Field>
       </div>
       <Field label="How can we help?" error={errors.message?.message} required>
@@ -178,73 +121,11 @@ export function ContactForm() {
         </Button>
       </div>
 
-      {status.kind === "mailto" ? (
-        <p
-          role="status"
-          className="flex items-start gap-3 rounded-xl bg-electric-50 p-4 text-sm text-ink"
-        >
-          <Mail aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-electric-600" />
-          Your email app should open with the message ready to send. If it doesn’t, email us at{" "}
-          {site.email}.
-        </p>
-      ) : null}
-      {status.kind === "error" ? (
+      {status === "error" ? (
         <p role="alert" className="rounded-xl bg-red-50 p-4 text-sm text-red-800">
           Sorry, the message couldn’t be sent. Please try again, or email us at {site.email}.
         </p>
       ) : null}
     </form>
-  );
-}
-
-type ControlProps = {
-  id: string;
-  "aria-invalid": boolean;
-  "aria-describedby"?: string;
-  "aria-required"?: boolean;
-  className: string;
-};
-
-/** Label, control and error message, wired together for screen readers. */
-function Field({
-  label,
-  error,
-  required,
-  children,
-}: {
-  label: string;
-  error?: string;
-  required?: boolean;
-  children: (props: ControlProps) => ReactNode;
-}) {
-  const id = useId();
-  const errorId = `${id}-error`;
-  return (
-    <div className="grid gap-2">
-      <label htmlFor={id} className="text-sm font-medium text-ink">
-        {label}
-        {required ? (
-          <span aria-hidden="true" className="text-electric-600">
-            {" "}
-            *
-          </span>
-        ) : null}
-      </label>
-      {children({
-        id,
-        "aria-invalid": Boolean(error),
-        "aria-describedby": error ? errorId : undefined,
-        "aria-required": required,
-        className: cn(
-          "w-full rounded-xl border bg-white px-4 py-3 text-base text-ink transition-[border-color,box-shadow] outline-none placeholder:text-slate-500 focus:border-electric-600 focus:ring-4 focus:ring-electric-600/15",
-          error ? "border-red-600" : "border-ink/15",
-        ),
-      })}
-      {error ? (
-        <p id={errorId} className="text-sm text-red-700">
-          {error}
-        </p>
-      ) : null}
-    </div>
   );
 }

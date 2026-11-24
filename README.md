@@ -32,10 +32,9 @@ npm run dev                  # http://localhost:3000
 
 ## Environment
 
-| Variable                       | Purpose                                                                                                                                                                                                     |
-| ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `NEXT_PUBLIC_SITE_URL`         | Canonical origin used for metadata, the sitemap and JSON-LD. Defaults to `https://irvineconsolidated.com`.                                                                                                  |
-| `NEXT_PUBLIC_CONTACT_ENDPOINT` | Optional. A form backend URL (HubSpot, Formspree or an API route) that receives a JSON `POST`. If it is not set, the contact form opens a pre-filled email to `info@` (or to `media@` for media enquiries). |
+| Variable               | Purpose                                                                                                    |
+| ---------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `NEXT_PUBLIC_SITE_URL` | Canonical origin used for metadata, the sitemap and JSON-LD. Defaults to `https://irvineconsolidated.com`. |
 
 ## Where things live
 
@@ -81,6 +80,5 @@ All copy lives in `src/content/*.ts`. Pages render whatever those files contain,
 
 - Legal review of `/privacy-policy/`.
 - Client review of the two new AI articles in Insights (`isNew: true`) and of the platform logos in the homepage marquee.
-- Set `NEXT_PUBLIC_CONTACT_ENDPOINT` if form submissions should go to a CRM rather than email.
 
 Workday is a registered trademark of Workday, Inc. Irvine Consolidated is not affiliated with Workday, Inc., nor does Workday, Inc. sponsor or endorse Irvine Consolidated, its products, or its website.

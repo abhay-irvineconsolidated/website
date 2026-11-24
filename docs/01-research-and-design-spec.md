@@ -199,7 +199,7 @@ We chose this over the suggested alternatives for three reasons:
 
 These are flagged here, and in the README, for confirmation before launch:
 
-1. **Contact form backend.** Not invented. The form posts JSON to `NEXT_PUBLIC_CONTACT_ENDPOINT` when it is set (for example a HubSpot, Formspree or serverless endpoint). When it is not set, the form falls back to opening a pre-filled email to info@irvineconsolidated.com.
+1. **Contact form backend.** Both forms (contact and talent network) render the site's own UI and submit to HubSpot through the Forms API (`src/lib/hubspot.ts`). Field names must match the HubSpot form fields.
 2. **Consultation scheduling.** The existing HubSpot form link (`share.hsforms.com/1ezvaoL…`) is reused as "Schedule a consultation". The Reward My Team Calendly link is kept on the Products page.
 3. **AI and software copy** is positioning copy describing intended capabilities. Before launch, the client should confirm each listed capability is one they are ready to sell.
 4. **New "AI & Technology" insight articles** (two) are written as editorial perspective pieces with no client claims. The client should review them before launch.

@@ -2,12 +2,14 @@ import type { Metadata } from "next";
 import { careers } from "@/content/company";
 import { HeroButton, PageHero } from "@/components/page/page-hero";
 import { Section, SectionTitle } from "@/components/page/section";
-import { Cards } from "@/components/page/cards";
-import { CtaSection } from "@/components/sections/cta-section";
+import { Cards, cardSurface } from "@/components/page/cards";
+import { Reveal } from "@/components/ui/motion";
+import { TalentNetworkForm } from "@/features/careers/talent-network-form";
 import { pageMeta } from "@/lib/seo";
+import { cn } from "@/lib/utils";
 
 const path = "/careers/";
-const applyHref = "/contact/?interest=careers#form";
+const applyHref = "#talent-network";
 
 export const metadata: Metadata = pageMeta({
   title: "Careers",
@@ -32,12 +34,19 @@ export default function CareersPage() {
         <Cards items={careers.benefits} cols={4} />
       </Section>
 
-      <CtaSection
-        eyebrow="Talent network"
-        title="Your next career milestone awaits."
-        text="Tell us about the work you want to do. We’ll be in touch when the right role opens."
-        primary={{ label: "Join Our Talent Network", href: applyHref }}
-      />
+      <Section ground="plain" id="talent-network">
+        <div className="grid gap-10 lg:grid-cols-12 lg:gap-8">
+          <div className="lg:col-span-5">
+            <SectionTitle
+              title="Your next career milestone awaits."
+              intro="Tell us about the work you want to do. We’ll be in touch when the right role opens."
+            />
+          </div>
+          <Reveal className={cn(cardSurface, "relative pt-8 lg:col-span-7")}>
+            <TalentNetworkForm />
+          </Reveal>
+        </div>
+      </Section>
     </>
   );
 }
